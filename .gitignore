@@ -9,3 +9,4 @@ allure-report/
 .idea/
 .vscode/
 bot/users_data.json
+bot/settings_data.json
