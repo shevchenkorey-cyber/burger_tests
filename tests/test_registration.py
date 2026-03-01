@@ -6,8 +6,7 @@ from pages.login_page import LoginPage
 from locators.register_page_locators import RegisterPageLocators
 from data.test_data import (
     VALID_REGISTER, EXISTING_USER_EMAIL,
-    INVALID_NAMES, INVALID_EMAILS, INVALID_PASSWORDS,
-    unique_email
+    INVALID_NAMES, INVALID_EMAILS, INVALID_PASSWORDS
 )
 
 
@@ -51,15 +50,14 @@ class TestRegistrationSuccess:
 
     @allure.title("Успешная регистрация → переход на страницу авторизации")
     @allure.severity(allure.severity_level.CRITICAL)
-    def test_successful_registration_redirects_to_login(self, driver):
+    def test_successful_registration_redirects_to_login(self, driver, new_email):
         page = RegisterPage(driver)
-        email = unique_email()
         with allure.step("Открываем страницу регистрации"):
             page.open_register()
         with allure.step(f"Заполняем имя: {VALID_REGISTER['name']}"):
             page.fill_name(VALID_REGISTER["name"])
-        with allure.step(f"Заполняем уникальный email: {email}"):
-            page.fill_email(email)
+        with allure.step(f"Заполняем уникальный email: {new_email}"):
+            page.fill_email(new_email)
         with allure.step("Заполняем пароль"):
             page.fill_password(VALID_REGISTER["password"])
         with allure.step("Нажимаем 'Зарегистрироваться'"):
@@ -81,15 +79,14 @@ class TestRegistrationNameValidation:
     @allure.title("Ошибка при невалидном имени: {reason}")
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize("name,reason", INVALID_NAMES)
-    def test_invalid_name_shows_error(self, driver, name, reason):
+    def test_invalid_name_shows_error(self, driver, new_email, name, reason):
         page = RegisterPage(driver)
-        email = unique_email()
         with allure.step("Открываем страницу регистрации"):
             page.open_register()
         with allure.step(f"Вводим невалидное имя ({reason})"):
             page.fill_name(name)
-        with allure.step(f"Заполняем уникальный email: {email}"):
-            page.fill_email(email)
+        with allure.step(f"Заполняем уникальный email: {new_email}"):
+            page.fill_email(new_email)
         with allure.step("Заполняем пароль"):
             page.fill_password(VALID_REGISTER["password"])
         with allure.step("Нажимаем 'Зарегистрироваться' и ждём ответа"):
@@ -165,15 +162,14 @@ class TestRegistrationPasswordValidation:
     @allure.title("Ошибка при невалидном пароле: {reason}")
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize("password,reason", INVALID_PASSWORDS)
-    def test_invalid_password_shows_error(self, driver, password, reason):
+    def test_invalid_password_shows_error(self, driver, new_email, password, reason):
         page = RegisterPage(driver)
-        email = unique_email()
         with allure.step("Открываем страницу регистрации"):
             page.open_register()
         with allure.step("Заполняем имя"):
             page.fill_name(VALID_REGISTER["name"])
-        with allure.step(f"Заполняем уникальный email: {email}"):
-            page.fill_email(email)
+        with allure.step(f"Заполняем уникальный email: {new_email}"):
+            page.fill_email(new_email)
         with allure.step(f"Вводим невалидный пароль ({reason})"):
             page.fill_password(password)
         with allure.step("Нажимаем 'Зарегистрироваться' и ждём ответа"):

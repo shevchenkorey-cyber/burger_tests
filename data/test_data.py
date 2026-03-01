@@ -1,4 +1,4 @@
-import time
+import uuid
 
 BASE_URL = "https://burger-frontend-1.prakticum-team.ru"
 
@@ -22,8 +22,8 @@ EXISTING_USER_EMAIL = "shevchenko.rey@gmail.com"
 
 
 def unique_email():
-    """Генерирует уникальный email на основе timestamp для каждого теста."""
-    return f"test_{int(time.time() * 1000)}@mailtest.com"
+    """Генерирует гарантированно уникальный email для каждого теста."""
+    return f"test_{uuid.uuid4().hex[:12]}@mailtest.com"
 
 # Невалидные имена
 INVALID_NAMES = [

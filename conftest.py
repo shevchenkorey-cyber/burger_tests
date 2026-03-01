@@ -2,6 +2,13 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from data.test_data import unique_email
+
+
+@pytest.fixture(scope="function")
+def new_email():
+    """Fixture: уникальный email для каждого теста (гарантирует отсутствие конфликтов)."""
+    return unique_email()
 
 
 @pytest.fixture(scope="function")
