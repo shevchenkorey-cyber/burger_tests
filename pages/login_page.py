@@ -16,6 +16,12 @@ class LoginPage(BasePage):
     def click_login_button(self):
         self.click(LoginPageLocators.LOGIN_BUTTON)
 
+    def click_register_link(self):
+        self.click(LoginPageLocators.REGISTER_LINK)
+
+    def find_register_link(self):
+        return LoginPageLocators.REGISTER_LINK
+
     def login(self, email, password):
         self.open_login()
         self.enter_email(email)
